@@ -2,10 +2,7 @@ package ua.com.hav.acc.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -27,5 +24,11 @@ public class User {
     @Min(10)
     @Max(70)
     private int age;
+
+    private String login;
+    private String password;
+    private String email;
+    private String address;
+    private String role;
 
 }

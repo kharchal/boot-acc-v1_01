@@ -36,14 +36,14 @@ public class UserService {
         userRepository.delete(id);
     }
 
-    @PostConstruct
-    public void init() {
-        Random r = new Random();
-        for (int i = 0; i < 10; i++) {
-            User user = new User();
-            user.setAge(r.nextInt(60) + 10);
-            user.setName("username_" + i);
-            userRepository.save(user);
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        Random r = new Random();
+//        for (int i = 0; i < 10; i++) {
+//            User user = new User();
+//            user.setAge(r.nextInt(60) + 10);
+//            user.setName("username_" + i);
+//            userRepository.save(user);
+//        }
+//    }
 }

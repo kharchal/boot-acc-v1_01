@@ -12,6 +12,9 @@ import ua.com.hav.acc.model.User;
 import ua.com.hav.acc.model.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by sunny on 26.12.17
@@ -25,7 +28,9 @@ public class UserController {
 
     @RequestMapping("")
     public String list(Model model) {
-        model.addAttribute("userList", userService.findAll());
+        List<User> userList = userService.findAll();
+        userList.sort((a, b) -> a.getId().compareTo(b.getId()));
+        model.addAttribute("userList", userList);
         return "user_list";
     }
 

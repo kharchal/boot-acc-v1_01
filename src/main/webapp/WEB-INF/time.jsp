@@ -5,7 +5,10 @@
     <title>Time</title>
 </head>
 <body>
+<div class="container">
+
     <c:out value="${time}"/>
     <jsp:include page="util/footer.jsp"/>
+</div>
 </body>
 </html>
