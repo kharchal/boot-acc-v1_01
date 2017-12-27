@@ -2,4 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
     <a href="<c:url value='/'/>"><s:message code="home"/></a>
+    <a href="<c:url value='/users/'/>"><s:message code="user.list"/></a>
+    <a href="<c:url value='new'/>"><s:message code="new"/></a>
 </div>

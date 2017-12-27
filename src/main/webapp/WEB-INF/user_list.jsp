@@ -32,13 +32,13 @@
                 <td><c:out value="${user.email}"/></td>
                 <td><c:out value="${user.address}"/></td>
                 <td>
-                    <a href="<c:url value='/users/${user.id}'/>" class="btn btn-info"><s:message code="edit"/></a>
+                    <a href="<c:url value='/users/${user.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>
                     <span class="dropdown">
-                        <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
+                        <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="btn btn-default"><s:message code="cancel"/></a></li>
-                            <li><a href="<c:url value='/users/delete/${user.id}'/>" class="btn btn-danger"><s:message code="confirm"/></a></li>
+                            <li><a href="#" class="btn btn-default btn-sm"><s:message code="cancel"/></a></li>
+                            <li><a href="<c:url value='/users/delete/${user.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
                         </ul>
                     </span>
                 </td>

@@ -9,10 +9,29 @@
     <script>
         function setLocale(locale) {
             $("#lang").val(locale);
-            $("#form").submit();
+            console.log("dirty=" + dirty);
+            console.log("locale=" + locale);
+            if (dirty) {
+                $("#form").submit();
+            } else {
+                old = document.location.href;
+                var ind = old.indexOf("?");
+                if (ind > 0) {
+                    old = old.substring(0, ind);
+                }
+                document.location.href = old + "?lang=" + locale;
+            }
+        }
+        var dirty = false;
+        var setDirty = function () {
+            dirty = true;
         }
         $(document).ready(function () {
-
+            dirty = false;
+            $("#name").change(setDirty);
+            $("#age").change(setDirty);
+            $("#login").change(setDirty);
+            console.log("dirty=" + dirty);
         });
     </script>
 </head>
@@ -22,7 +41,7 @@
     <div>
         <c:set var="locale" value="${pageContext.response.locale}"/>
         <c:if test="${locale ne 'ru'}" var="not_ru">
-        <a href="#" onclick="setLocale('ru')">
+        <a onclick="setLocale('ru')">
             </c:if>
             <s:message code="lang.ru"/>
             <c:if test="${not_ru}">
@@ -30,7 +49,7 @@
         </c:if>
         |
         <c:if test="${locale ne 'en'}" var="not_en">
-        <a href="#" onclick="setLocale('en');">
+        <a onclick="setLocale('en');">
             </c:if>
             <s:message code="lang.en"/>
             <c:if test="${not_en}">
@@ -43,7 +62,7 @@
         <input type="hidden" name="lang" id="lang" value="${locale}"/>
     <table class="table">
         <tr>
-            <td width="20%">
+            <td width="10%">
                 <label for="id">
                     <s:message code="id"/>
                 </label>
@@ -51,7 +70,7 @@
             <td width="40%">
                 <f:input path="id" readonly="true" cssClass="form-control"/>
             </td>
-            <td width="40%">
+            <td width="50%">
             </td>
         </tr>
         <tr>
