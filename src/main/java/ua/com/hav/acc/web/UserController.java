@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.com.hav.acc.model.User;
 import ua.com.hav.acc.model.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -66,5 +64,17 @@ public class UserController {
     public String edit(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:/users/";
+    }
+
+    @RequestMapping(value = "/massdelete", method = RequestMethod.POST)
+    @ResponseBody
+    public String massDelete(@RequestParam(value = "ids[]", required = false) Long[] ids) {
+        System.out.println("ids to delete= " + Arrays.toString(ids));
+        if (ids != null) {
+            for (long id : ids) {
+                userService.delete(id);
+            }
+        }
+        return "ok";
     }
 }

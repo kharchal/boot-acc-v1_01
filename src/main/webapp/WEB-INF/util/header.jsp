@@ -17,4 +17,10 @@
     <c:if test="${not_en}">
         </a>
     </c:if>
+
+    <a href="<c:url value="/logout"/>"><s:message code="logout"/></a>
+
+
+      login: ${sessionScope.principal.username}; password: ${sessionScope.principal.password}; roles: ${sessionScope.principal.authorities}
+
 </div>
