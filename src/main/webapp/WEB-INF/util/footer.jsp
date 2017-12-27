@@ -4,5 +4,5 @@
     <a href="<c:url value='/'/>"><s:message code="home"/></a> |
     <a href="<c:url value='/users/'/>"><s:message code="user.list"/></a> |
     <a href="<c:url value='new'/>"><s:message code="new"/></a> |
-    <a href="<c:url value='/init'/>"><s:message code="init"/></a>
+    <a href="<c:url value='/users/init'/>"><s:message code="init"/></a>
 </div>

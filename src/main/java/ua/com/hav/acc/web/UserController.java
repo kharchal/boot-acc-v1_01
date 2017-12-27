@@ -48,6 +48,7 @@ public class UserController {
 
     @RequestMapping("/init")
     public String init() {
+        userService.init();
         return "redirect:/users/";
     }
 
