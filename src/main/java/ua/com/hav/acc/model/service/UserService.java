@@ -1,13 +1,11 @@
 package ua.com.hav.acc.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.hav.acc.model.User;
 import ua.com.hav.acc.model.repository.UserRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
 
@@ -42,7 +40,21 @@ public class UserService {
 //    }
 
 //    @PostConstruct
+
+//    @Autowired
+//    RoleRepository roleRepository;
     public void init() {
+
+//        Role admin = new Role();
+//        Role user = new Role();
+//        Role guest = new Role();
+//        admin.setValue("ADMIN");
+//        user.setValue("USER");
+//        guest.setValue("GUEST");
+//        roleRepository.save(admin);
+//        roleRepository.save(user);
+//        roleRepository.save(guest);
+
         Random r = new Random();
         for (int i = 0; i < 10; i++) {
             User user = new User();
@@ -50,5 +62,9 @@ public class UserService {
             user.setName("username_" + i);
             userRepository.save(user);
         }
+    }
+
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 }

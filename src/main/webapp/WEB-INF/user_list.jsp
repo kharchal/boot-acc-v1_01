@@ -48,7 +48,7 @@
             <th><s:message code="name"/></th>
             <th><s:message code="age"/></th>
             <th><s:message code="login"/></th>
-            <th><s:message code="password"/></th>
+            <th><s:message code="rolex"/></th>
             <th><s:message code="role"/></th>
             <th><s:message code="email"/></th>
             <th><s:message code="address"/></th>
@@ -61,7 +61,7 @@
                 <td><c:out value="${user.name}"/></td>
                 <td><c:out value="${user.age}"/></td>
                 <td><c:out value="${user.login}"/></td>
-                <td><c:out value="${user.password}"/></td>
+                <td><c:out value="${user.rolex.value}"/></td>
                 <td><c:out value="${user.role}"/></td>
                 <td><c:out value="${user.email}"/></td>
                 <td><c:out value="${user.address}"/></td>

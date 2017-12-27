@@ -1,11 +1,13 @@
 .form-error {
     color: red;
     font-size: small;
+    font-weight: bold;
     font-style: italic;
 }
 .form-success {
     color: forestgreen;
     font-size: small;
+    font-weight: bold;
     font-style: italic;
 }
 h2 {

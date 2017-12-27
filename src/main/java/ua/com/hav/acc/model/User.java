@@ -31,4 +31,11 @@ public class User {
     private String address;
     private String role;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+//    @JoinTable(name = "users_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Role rolex;
+
 }

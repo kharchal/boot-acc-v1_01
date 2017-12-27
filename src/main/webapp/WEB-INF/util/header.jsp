@@ -17,10 +17,12 @@
     <c:if test="${not_en}">
         </a>
     </c:if>
-
+     |
     <a href="<c:url value="/logout"/>"><s:message code="logout"/></a>
-
-
-      login: ${sessionScope.principal.username}; password: ${sessionScope.principal.password}; roles: ${sessionScope.principal.authorities}
+     |
+    <c:set value="${sessionScope.logged_user}" var="user"/>
+    <c:if test="${not empty user}">
+      login: ${user.login}; name: ${user.name}; role: ${user.role}
+    </c:if>
 
 </div>

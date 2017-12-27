@@ -149,7 +149,7 @@
             <td>
                 <input id="pass_value" class="form-control" pattern="^[A-Za-z]{1}[A-Za-z0-9!@#$%^&*]{2,9}$" required="required"
                        title="start with a letter (3 to 10 symbols long)" placeholder="Enter password"/>
-                <input name="password" class="form-control" readonly="true" id="password"/>
+                <input type="hidden" name="password" class="form-control" readonly="true" id="password"/>
             </td>
             <td>
                 <f:errors path="password" cssClass="form-error"/>
@@ -167,6 +167,16 @@
             </td>
             <td>
                 <f:errors path="role" cssClass="form-error"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="rolex.id">
+                    <s:message code="rolex"/>
+                </label>
+            </td>
+            <td>
+                <f:select path="rolex.id" items="${roles}"/>
             </td>
         </tr>
         <tr>
