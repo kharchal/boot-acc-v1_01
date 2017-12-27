@@ -1,8 +1,9 @@
 .form-error {
     color: red;
     font-size: smaller;
+    font-style: italic;
 }
 
 h2 {
-    color: forestgreen;
+    color: mediumblue;
 }

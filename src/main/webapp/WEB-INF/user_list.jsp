@@ -32,7 +32,8 @@
                 <td><c:out value="${user.email}"/></td>
                 <td><c:out value="${user.address}"/></td>
                 <td>
-                    <a href="<c:url value='/users/${user.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>
+                    <nobr>
+                    <a href="<c:url value='/users/${user.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
                     <span class="dropdown">
                         <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
                             <span class="caret"></span></button>
@@ -41,6 +42,7 @@
                             <li><a href="<c:url value='/users/delete/${user.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
                         </ul>
                     </span>
+                    </nobr>
                 </td>
             </tr>
         </c:forEach>

@@ -46,11 +46,15 @@ public class UserController {
         return "user_form";
     }
 
+    @RequestMapping("/init")
+    public String init() {
+        return "redirect:/users/";
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid User user, BindingResult errors) {
-//        if ()
+    public String save(@Valid User user, BindingResult errors, @RequestParam String cmd) {
         System.out.println("user = " + user);
-        if (errors.hasErrors()) {
+        if (errors.hasErrors() || cmd.toLowerCase().equals("change")) {
             return "user_form";
         }
         userService.save(user);

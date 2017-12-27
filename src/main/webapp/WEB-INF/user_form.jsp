@@ -9,29 +9,40 @@
     <script>
         function setLocale(locale) {
             $("#lang").val(locale);
+            console.log("locale changed.");
             console.log("dirty=" + dirty);
-            console.log("locale=" + locale);
+            console.log("new locale=" + locale);
             if (dirty) {
+                console.log("do submit!");
+                alert("1");
+                $("#cmd").val("change");
                 $("#form").submit();
             } else {
                 old = document.location.href;
-                var ind = old.indexOf("?");
-                if (ind > 0) {
-                    old = old.substring(0, ind);
-                }
-                document.location.href = old + "?lang=" + locale;
+//                var ind = old.indexOf("?");
+//                if (ind > 0) {
+//                    old = old.substring(0, ind);
+//                }
+                old = old.split("?")[0];
+                var get = old + "?lang=" + locale;
+                console.log("do get @: " + get);
+                alert("2");
+                document.location.href = get;
             }
         }
         var dirty = false;
         var setDirty = function () {
             dirty = true;
+            console.log("dirty=" + dirty);
         }
         $(document).ready(function () {
             dirty = false;
             $("#name").change(setDirty);
             $("#age").change(setDirty);
             $("#login").change(setDirty);
-            console.log("dirty=" + dirty);
+            $("#password").change(setDirty);
+            $("#email").change(setDirty);
+            $("#address").change(setDirty);
         });
     </script>
 </head>
@@ -60,6 +71,7 @@
     <c:set var="action"><c:url value="/users/save"/></c:set>
     <f:form modelAttribute="user" action="${action}" id="form">
         <input type="hidden" name="lang" id="lang" value="${locale}"/>
+        <input type="hidden" name="cmd" id="cmd" value="save"/>
     <table class="table">
         <tr>
             <td width="10%">

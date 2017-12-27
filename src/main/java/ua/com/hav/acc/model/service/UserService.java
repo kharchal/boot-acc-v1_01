@@ -1,6 +1,7 @@
 package ua.com.hav.acc.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.hav.acc.model.User;
@@ -36,14 +37,18 @@ public class UserService {
         userRepository.delete(id);
     }
 
-//    @PostConstruct
-//    public void init() {
-//        Random r = new Random();
-//        for (int i = 0; i < 10; i++) {
-//            User user = new User();
-//            user.setAge(r.nextInt(60) + 10);
-//            user.setName("username_" + i);
-//            userRepository.save(user);
-//        }
+//    public Page<User> findAllPage() {
+//        new Page<User>();
 //    }
+
+//    @PostConstruct
+    public void init() {
+        Random r = new Random();
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setAge(r.nextInt(60) + 10);
+            user.setName("username_" + i);
+            userRepository.save(user);
+        }
+    }
 }
