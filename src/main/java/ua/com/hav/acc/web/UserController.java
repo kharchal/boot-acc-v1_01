@@ -39,16 +39,18 @@ public class UserController {
 //
 //        return principal;
 //    }
-    @ModelAttribute(name = "roles")
-    public Map<Long, String> roles() {
-        return roleRepository.findAll().stream().collect(toMap(Role::getId, Role::getValue));
+//    @ModelAttribute(name = "rolesMap")
+//    public Map<Long, String> rolesMap() {
+//        return roleRepository.findAll().stream().collect(toMap(Role::getId, Role::getValue));
+//    }
+
+    @ModelAttribute(name = "rolesList")
+    public List<Role> rolesList() {
+        return roleRepository.findAll();
     }
 
     @RequestMapping("")
-    public String list(Model model, HttpSession session) {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByLogin(principal.getUsername());
-        session.setAttribute("logged_user", user);
+    public String list(Model model) {
         List<User> userList = userService.findAll();
         userList.sort((a, b) -> a.getId().compareTo(b.getId()));
         model.addAttribute("userList", userList);
@@ -74,12 +76,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid User user, BindingResult errors, @RequestParam String cmd) {
+    public String save(@Valid User user, BindingResult errors,
+                       @RequestParam String cmd,
+                       @RequestParam(value = "psw_change", required = false, defaultValue = "false") Boolean pswChange) {
+
         System.out.println("user = " + user);
-        if (errors.hasErrors() || cmd.toLowerCase().equals("change")) {
+        if (user.getId() == null && !pswChange || errors.hasErrors() || cmd.toLowerCase().equals("change")) {
             return "user_form";
         }
-        userService.save(user);
+        userService.save(user, pswChange);
         return "redirect:/users/";
     }
 

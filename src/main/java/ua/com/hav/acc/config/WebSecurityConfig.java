@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/users").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/register").permitAll()
                 .antMatchers("/static/**").permitAll()
 //                .antMatchers("/zone/def").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -48,14 +48,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .withUser("admin").password("333").roles("ADMIN");
 //    }
 
-//    @PersistenceContext
-//    private EntityManager entityManager;
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth, @Qualifier("dataSource") DataSource dataSource) throws Exception {
 
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select login, password, 1 from User where login=?")
-                .authoritiesByUsernameQuery("select login, role from user where login=?");
+                .usersByUsernameQuery("select login, password, 1 from user where login=?")
+//                .authoritiesByUsernameQuery("select u.login, r.value from user u left join role r on u.user_id = r.id where login=?");
+                .authoritiesByUsernameQuery("select u.login, r.value from user u left join users_roles ur on ur.user_id = u.id " +
+                        "left join role r on ur.role_id = r.id where login=?");
     }
 }

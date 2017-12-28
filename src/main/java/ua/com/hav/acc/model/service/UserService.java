@@ -3,7 +3,9 @@ package ua.com.hav.acc.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.com.hav.acc.model.Role;
 import ua.com.hav.acc.model.User;
+import ua.com.hav.acc.model.repository.RoleRepository;
 import ua.com.hav.acc.model.repository.UserRepository;
 
 import java.util.List;
@@ -27,7 +29,10 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void save(User user) {
+    public void save(User user, boolean pswChange) {
+        if (!pswChange) {
+            user.setPassword(userRepository.findOne(user.getId()).getPassword());
+        }
         userRepository.save(user);
     }
 
@@ -44,7 +49,7 @@ public class UserService {
 //    @Autowired
 //    RoleRepository roleRepository;
     public void init() {
-
+//
 //        Role admin = new Role();
 //        Role user = new Role();
 //        Role guest = new Role();

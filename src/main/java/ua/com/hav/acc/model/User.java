@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * Created by sunny on 26.12.17
@@ -29,13 +30,16 @@ public class User {
     private String password;
     private String email;
     private String address;
-    private String role;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-//    @JoinTable(name = "users_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Role rolex;
+    @ManyToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
+
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//
+//    private Role rolex;
 
 }
