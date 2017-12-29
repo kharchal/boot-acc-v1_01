@@ -37,9 +37,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//
-//    private Role rolex;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Customer> customerList;
 
 }

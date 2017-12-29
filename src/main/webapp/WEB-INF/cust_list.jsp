@@ -6,41 +6,7 @@
     <title>User list</title>
     <jsp:include page="util/imports.jsp"/>
     <script>
-        var order = ${sort_order};
-        var sort = "${sort_col}";
-//        var up = "glyphicon glyphicon-circle-arrow-up";
-//        var up = "glyphicon glyphicon-thumbs-up";
-        var up = "glyphicon glyphicon-arrow-up";
-//        var up = "glyphicon glyphicon-chevron-up";
-//        var down = "glyphicon glyphicon-circle-arrow-down";
-//        var down = "glyphicon glyphicon-thumbs-down";
-        var down = "glyphicon glyphicon-arrow-down";
-//        var down = "glyphicon glyphicon-chevron-down";
-//        var up = "glyphicon glyphicon-sort-by-attributes";
-//        var up = "glyphicon glyphicon-sort-by-attributes";
-//        var downSfx = "-alt";
-        function reloadPageSorted() {
-            order = !order;
-            $.post("sort", {order: order, sort: sort}, function () {
-                location.reload(true);
-            });
-        }
         $(document).ready(function () {
-            var txt = $("#sort_" + sort).text();
-            $("#sort_" + sort).html(txt + " <span style='font-size: smaller;' class='" + (order ? up : down) +"'></span>");
-//            $("#sort_" + sort).html(txt + " <span style='font-size: smaller;' class='" + up + (order ? "" : downSfx) +"'></span>");
-            $("#sort_id").click(function () {
-                sort = "id";
-                reloadPageSorted()
-            });
-            $("#sort_name").click(function () {
-                sort = "name";
-                reloadPageSorted()
-            });
-            $("#sort_cost").click(function () {
-                sort = "cost";
-                reloadPageSorted()
-            });
             $("#select_all").click(function () {
                 $(".chk:not(:checked)").each(function () {
                     $(this).prop("checked", true);
@@ -80,7 +46,7 @@
 <body>
 <div class="container">
     <jsp:include page="util/header.jsp"/>
-    <h2><s:message code="user.list"/></h2>
+    <h2><s:message code="customer.list"/></h2>
     <table class="table table-hover">
         <tr>
             <th>
@@ -99,26 +65,36 @@
                     </ul>
                 </span>
             </th>
-            <th id="sort_id"><s:message code="id"/></span></th>
-            <th id="sort_name"><s:message code="name"/></span></th>
-            <th id="sort_cost"><s:message code="cost"/></span></th>
+            <th><s:message code="id"/></th>
+            <th><s:message code="number"/></th>
+            <th><s:message code="balance"/></th>
+            <th><s:message code="active"/></th>
+            <th><s:message code="user.login"/></th>
+            <th><s:message code="service.list"/></th>
             <th></th>
         </tr>
-        <c:forEach var="serv" items="${list}">
+        <c:forEach var="cust" items="${list}">
             <tr>
-                <td><input type="checkbox" class="chk" value="${serv.id}"/></td>
-                <td><c:out value="${serv.id}"/></td>
-                <td><c:out value="${serv.name}"/></td>
-                <td><c:out value="${serv.cost}"/></td>
+                <td><input type="checkbox" class="chk" value="${cust.id}"/></td>
+                <td><c:out value="${cust.id}"/></td>
+                <td><c:out value="${cust.number}"/></td>
+                <td><c:out value="${cust.balance}"/></td>
+                <td><input type="checkbox" disabled ${cust.active ? "checked" : ""}/></td>
+                <td><c:out value="${cust.user.login}"/></td>
+                <td>
+                    <c:forEach var="serv" items="${cust.serviceList}">
+                        <c:out value="${serv.name} : ${serv.cost}"/><br>
+                    </c:forEach>
+                </td>
                 <td>
                     <nobr>
-                    <a href="<c:url value='/service/${serv.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
+                    <a href="<c:url value='/customer/${cust.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
                     <span class="dropdown">
                         <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="btn btn-default btn-sm"><s:message code="cancel"/></a></li>
-                            <li><a href="<c:url value='/service/delete/${serv.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
+                            <li><a href="<c:url value='/customer/delete/${cust.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
                         </ul>
                     </span>
                     </nobr>

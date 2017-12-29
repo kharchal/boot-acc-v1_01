@@ -13,8 +13,7 @@
 <div class="container">
     <jsp:include page="util/header.jsp"/>
     <h2><s:message code="hello"/></h2>
-    <a href="<c:url value='/time'/>">time</a>
-    <a href="<c:url value='/users/'/>">users</a>
+    <jsp:include page="util/footer.jsp"/>
 </div>
 </body>
 </html>

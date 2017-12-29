@@ -83,7 +83,6 @@
             <th><s:message code="age"/></th>
             <th><s:message code="login"/></th>
             <th class="psw_col"><s:message code="password"/></th>
-            <%--<th><s:message code="rolex"/></th>--%>
             <th><s:message code="role"/></th>
             <th><s:message code="email"/></th>
             <th><s:message code="address"/></th>
@@ -97,15 +96,10 @@
                 <td><c:out value="${user.age}"/></td>
                 <td><c:out value="${user.login}"/></td>
                 <td class="psw_col"><c:out value="${user.password}"/></td>
-                <%--<td><c:out value="${user.rolex.value}"/></td>--%>
                 <td>
-                    <c:forEach var="r" items="${user.roles}" varStatus="status">
-                        <c:if test="${not status.first}">
-                            <br>
-                        </c:if>
-                        ${r.value}
+                    <c:forEach var="r" items="${user.roles}">
+                        ${r.value}<br>
                     </c:forEach>
-                    <%--<c:out value="${user.roles}"/>--%>
                 </td>
                 <td><c:out value="${user.email}"/></td>
                 <td><c:out value="${user.address}"/></td>
