@@ -9,7 +9,11 @@
     <script src="/acc/static/js/md5.min.js"></script>
     <c:set var="pass_error"><s:message code="password.form.error"/></c:set>
     <script>
-
+        function preSubmit() {
+            var x = $("#fmt_number").val();
+            x = x.substr(1, 3) + x.substr(6, 3) + x.substr(10, 2) + x.substr(13, 2);
+            $("#number").val(x);
+        }
     </script>
 </head>
 <body>
@@ -33,12 +37,14 @@
         </tr>
         <tr>
             <td>
-                <label for="number">
+                <label for="fmt_number">
                     <s:message code="number"/>
                 </label>
             </td>
             <td>
-                <f:input path="number" cssClass="form-control"/>
+                <input id="fmt_number" value="${customer.formattedNumber}" class="form-control"
+                       pattern="^\([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$" required/>
+                <input type="hidden" name="number" id="number"/>
             </td>
             <td>
                 <f:errors path="number" cssClass="form-error"/>
@@ -81,13 +87,16 @@
                     <c:forEach items="${servList}" var="serv">
                         <tr>
                             <td>
-                                <input type="checkbox" name="serv" value="${serv.id}" ${customer.serviceList.contains(serv) ? "checked" : ""}/>
+                                <input id="serv" type="checkbox" name="serv" value="${serv.id}" ${customer.serviceList.contains(serv) ? "checked" : ""}/>
                             </td>
                             <td>
                                 ${serv.cost}
                             </td>
                             <td>
                                 ${serv.name}
+                            </td>
+                            <td>
+                                ${serv.period.value}
                             </td>
                         </tr>
                     </c:forEach>
@@ -97,7 +106,8 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <input class="btn btn-info" type="submit" value="<s:message code="form.save"/>"/>
+                <input class="btn btn-info" type="submit" value="<s:message code="form.save"/>" onclick="preSubmit();"/>
+                <input type="hidden" name="user.id" value="${customer.user.id}"/>
             </td>
             <td></td>
         </tr>

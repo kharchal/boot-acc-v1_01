@@ -8,14 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.com.hav.acc.model.CustService;
+import ua.com.hav.acc.model.CustServicePeriod;
+import ua.com.hav.acc.model.service.CustServicePeriodService;
 import ua.com.hav.acc.model.service.CustServiceService;
 
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Created by sunny on 28.12.17
@@ -26,6 +30,8 @@ public class CustServiceController {
 
     @Autowired
     private CustServiceService serviceService;
+    @Autowired
+    CustServicePeriodService periodService;
 
     private String sortByField = "id";
     private Sort.Direction sortDir = Sort.Direction.ASC;
@@ -85,5 +91,10 @@ public class CustServiceController {
         sortDir = order ? Sort.Direction.ASC : Sort.Direction.DESC;
         sortByField = sortField;
         return "ok";
+    }
+
+    @ModelAttribute("periods")
+    public List<CustServicePeriod> periods() {
+        return periodService.findAll();
     }
 }

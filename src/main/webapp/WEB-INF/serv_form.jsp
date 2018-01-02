@@ -95,7 +95,22 @@
             </td>
         </tr>
 
-
+        <tr>
+            <td>
+                <label for="period.id">
+                    <s:message code="period"/>
+                </label>
+            </td>
+            <td>
+                <%--${periods}--%>
+                <select name="period.id" id="period.id">
+                    <c:forEach items="${periods}" var="p">
+                        <option value="${p.id}" ${service.period eq p ? "selected" : ""}>${p.value}</option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td></td>
+        </tr>
 
         <tr>
             <td colspan="2" align="right">

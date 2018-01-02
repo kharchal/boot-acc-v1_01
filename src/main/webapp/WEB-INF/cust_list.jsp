@@ -77,13 +77,13 @@
             <tr>
                 <td><input type="checkbox" class="chk" value="${cust.id}"/></td>
                 <td><c:out value="${cust.id}"/></td>
-                <td><c:out value="${cust.number}"/></td>
+                <td><c:out value="${cust.formattedNumber}"/></td>
                 <td><c:out value="${cust.balance}"/></td>
                 <td><input type="checkbox" disabled ${cust.active ? "checked" : ""}/></td>
                 <td><c:out value="${cust.user.login}"/></td>
                 <td>
                     <c:forEach var="serv" items="${cust.serviceList}">
-                        <c:out value="${serv.name} : ${serv.cost}"/><br>
+                        <c:out value="${serv.period.value}/${serv.name} : ${serv.cost}"/><br>
                     </c:forEach>
                 </td>
                 <td>

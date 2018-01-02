@@ -2,10 +2,7 @@ package ua.com.hav.acc.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
@@ -21,4 +18,9 @@ public class CustService {
 
     private String name;
     private BigDecimal cost;
+
+    @ManyToOne
+    @JoinColumn(name = "serv_id")
+    private CustServicePeriod period;
+
 }

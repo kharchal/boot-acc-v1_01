@@ -3,58 +3,36 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
-    <title>User list</title>
+    <title>Payments list</title>
     <jsp:include page="util/imports.jsp"/>
     <script>
-        var order = ${sort_order};
-        var sort = "${sort_col}";
-        var begining = "glyphicon glyphicon-";
-        var symbol = "arrow";
-        var up = "-up";
-        var down = "-down";
-//        var up = "glyphicon glyphicon-circle-arrow-up";
-//        var up = "glyphicon glyphicon-thumbs-up";
-//        var up = "glyphicon glyphicon-signal";
-//        var up = "glyphicon glyphicon-menu-up";
-//        var up = "glyphicon glyphicon-collapse-up";
-//        var up = "glyphicon glyphicon-chevron-up";
-//        var down = "glyphicon glyphicon-circle-arrow-down";
-//        var down = "glyphicon glyphicon-thumbs-down";
-//        var down = "glyphicon glyphicon-arr style=\"float:left; ow-down";
-//        var down = "glyphicon glyphicon-menu-down";
-//        var down = "glyphicon glyphicon-collapse-down";
-//        var down = "glyphicon glyphicon-chevron-down";
-//        var up = "glyphicon glyphicon-sort-by-attributes";
-//        var up = "glyphicon glyphicon-sort-by-attributes";
-//        var downSfx = "-alt";
-        function reloadPageSorted() {
-            order = !order;
-            $.post("sort", {order: order, sort: sort}, function () {
-                location.reload(true);
-            });
-        }
+        <%--var order = ${sort_order};--%>
+        <%--var sort = "${sort_col}";--%>
+        <%--var begining = "glyphicon glyphicon-";--%>
+        <%--var symbol = "arrow";--%>
+        <%--var up = "-up";--%>
+        <%--var down = "-down";--%>
+        <%--function reloadPageSorted() {--%>
+            <%--order = !order;--%>
+            <%--$.post("sort", {order: order, sort: sort}, function () {--%>
+                <%--location.reload(true);--%>
+            <%--});--%>
+        <%--}--%>
         $(document).ready(function () {
-            var txt = $("#sort_" + sort).text();
-//            if (order) {
-//                txt += " <span style='font-size: smaller;' class='" + up + "'></span>";
-//            } else {
-//                txt += " <div style='transform: rotateY(180deg); float: left;'><span style='font-size: smaller;' class='" + up + "'></span></div>";
-//            }
-//            $("#sort_" + sort).html(txt);
-            $("#sort_" + sort).html(txt + ":&nbsp;<span style='font-size: smaller; color: cornflowerblue;' class='" + begining + symbol + (order ? up : down) +"'></span>");
-//            $("#sort_" + sort).html(txt + " <span style='font-size: smaller;' class='" + up + (order ? "" : downSfx) +"'></span>");
-            $("#sort_id").click(function () {
-                sort = "id";
-                reloadPageSorted()
-            });
-            $("#sort_name").click(function () {
-                sort = "name";
-                reloadPageSorted()
-            });
-            $("#sort_cost").click(function () {
-                sort = "cost";
-                reloadPageSorted()
-            });
+//            var txt = $("#sort_" + sort).text();
+//            $("#sort_" + sort).html(txt + ":&nbsp;<span style='font-size: smaller; color: cornflowerblue;' class='" + begining + symbol + (order ? up : down) +"'></span>");
+//            $("#sort_id").click(function () {
+//                sort = "id";
+//                reloadPageSorted()
+//            });
+//            $("#sort_name").click(function () {
+//                sort = "date";
+//                reloadPageSorted()
+//            });
+//            $("#sort_cost").click(function () {
+//                sort = "sum";
+//                reloadPageSorted()
+//            });
             $("#select_all").click(function () {
                 $(".chk:not(:checked)").each(function () {
                     $(this).prop("checked", true);
@@ -88,13 +66,29 @@
                     }
                 });
             });
+            $("#mass_process").click(function () {
+                console.log("mass process...");
+                var arr = [];
+                $(".chk:checked").each(function () {
+                    console.log("val=" + $(this).val());
+                    arr.push($(this).val());
+                });
+                console.log("arr=" + arr);
+                $.post("massprocess", {ids: arr}, function (resp, status) {
+                    console.log("resp = " + resp);
+                    console.log("status = " + status);
+                    if (status == 'success') {
+                        location.reload(true);
+                    }
+                });
+            });
         });
     </script>
 </head>
 <body>
 <div class="container">
     <jsp:include page="util/header.jsp"/>
-    <h2><s:message code="user.list"/></h2>
+    <h2><s:message code="payment.list"/></h2>
     <table class="table table-hover">
         <tr>
             <th>
@@ -110,31 +104,33 @@
                         <li><a id="reverse"><s:message code="reverse"/></a></li>
                         <li class="divider"></li>
                         <li><a id="mass_delete"><span style="color: red; font-weight: bold"><s:message code="mass.delete"/></span></a></li>
+                        <li class="divider"></li>
+                        <li><a id="mass_process"><span style="color: blue; font-weight: bold"><s:message code="mass.process"/></span></a></li>
                     </ul>
                 </span>
             </th>
             <th id="sort_id" onclick="sort('id');"><s:message code="id"/></th>
-            <th id="sort_name"><s:message code="name"/></th>
-            <th id="sort_cost"><s:message code="cost"/></th>
-            <th><s:message code="period"/></th>
+            <th id="sort_date"><s:message code="date"/></th>
+            <th id="sort_sum"><s:message code="sum"/></th>
+            <th id="sort_processed"><s:message code="processed"/></th>
             <th></th>
         </tr>
-        <c:forEach var="serv" items="${list}">
+        <c:forEach var="paym" items="${list}">
             <tr>
-                <td><input type="checkbox" class="chk" value="${serv.id}"/></td>
-                <td><c:out value="${serv.id}"/></td>
-                <td><c:out value="${serv.name}"/></td>
-                <td><c:out value="${serv.cost}"/></td>
-                <td><c:out value="${serv.period.value}"/></td>
+                <td><input type="checkbox" class="chk" value="${paym.id}"/></td>
+                <td><c:out value="${paym.id}"/></td>
+                <td><c:out value="${paym.date}"/></td>
+                <td><c:out value="${paym.sum}"/></td>
+                <td><c:out value="${paym.processed}"/></td>
                 <td>
                     <nobr>
-                    <a href="<c:url value='/service/${serv.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
+                    <a href="<c:url value='/admin/payment/${paym.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
                     <span class="dropdown">
                         <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="btn btn-default btn-sm"><s:message code="cancel"/></a></li>
-                            <li><a href="<c:url value='/service/delete/${serv.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
+                            <li><a href="<c:url value='/admin/payment/delete/${paym.id}'/>" class="btn btn-danger btn-sm"><s:message code="confirm"/></a></li>
                         </ul>
                     </span>
                     </nobr>

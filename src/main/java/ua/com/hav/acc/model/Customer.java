@@ -3,7 +3,9 @@ package ua.com.hav.acc.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.swing.text.MaskFormatter;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -17,8 +19,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String number;
-    private BigDecimal balance;
+    private String number = "0000000000";
+    private BigDecimal balance = BigDecimal.ZERO;
     private boolean active;
 
     @ManyToMany
@@ -30,4 +32,10 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public String getFormattedNumber() throws ParseException {
+        MaskFormatter mf = new MaskFormatter("(###) ###-##-##");
+        mf.setValueContainsLiteralCharacters(false);
+        return mf.valueToString(number);
+    }
 }
