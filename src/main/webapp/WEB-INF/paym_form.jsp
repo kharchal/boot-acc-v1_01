@@ -8,12 +8,49 @@
     <jsp:include page="util/imports.jsp"/>
     <script src="/acc/static/js/md5.min.js"></script>
     <c:set var="pass_error"><s:message code="password.form.error"/></c:set>
+    <style>
+        #out {
+            color: darkblue;
+            border: 2px solid gray;
+            padding: 5px;
+            background-color: white;
+            width: 200px; position: absolute;
+            top: 200px;
+            left: 220px;
+            z-index: 2;
+            display: none;
+        }
+    </style>
     <script>
+        function foo(id, numb) {
+            $(".cust_id").val(id);
+            $("#out").hide();
+            $("#cust").val(numb);
+        }
         $(document).ready(function () {
+            $("#out").hide();
             $("#cust").keyup(function () {
                 var input = $("#cust").val();
+                console.log("read: " + input);
+                $("#out").hide();
                 if (input.length >= 2) {
-                    $.get("ajax/find");
+                    console.log("send: " + input);
+                    $.post("ajax/find", {number: input}, function (data) {
+                        console.log(data);
+                        data = JSON.parse(data);
+                        var out = "";
+                        for (var i = 0; i < data.length; i++) {
+                            var num = data[i].number;
+                            out += "<p><a onclick='foo(" + data[i].id + ", \"" + num + "\");'>" + data[i].number + "</a></p>";
+                        }
+                        console.log("out:" + out);
+                        if (out.length > 0) {
+                            $("#out").html(out);
+                            $("#out").show();
+                        } else {
+                            $("#out").hide();
+                        }
+                    });
                 }
             })
         });
@@ -57,13 +94,13 @@
         </tr>
         <tr>
             <td>
-                <label for="customer.id">
+                <label for="cust">
                     <s:message code="customer"/>
                 </label>
             </td>
             <td>
-                <input id="cust" class="form-control"/>
-                <f:input path="customer.id" readonly="true"/>
+                <input id="cust" class="form-control" value="${payment.customer.formattedNumber}"/>
+                <input name="cust_id" readonly="true" class="cust_id" value="${payment.customer.id}"/>
             </td>
             <td></td>
         </tr>
@@ -105,5 +142,6 @@
     </f:form>
     <jsp:include page="util/footer.jsp"/>
 </div>
+<div id="out"></div>
 </body>
 </html>

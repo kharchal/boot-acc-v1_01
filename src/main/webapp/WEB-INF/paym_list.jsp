@@ -113,6 +113,7 @@
             <th id="sort_date"><s:message code="date"/></th>
             <th id="sort_sum"><s:message code="sum"/></th>
             <th id="sort_processed"><s:message code="processed"/></th>
+            <th id="sort_cust"><s:message code="customer"/></th>
             <th></th>
         </tr>
         <c:forEach var="paym" items="${list}">
@@ -122,6 +123,8 @@
                 <td><c:out value="${paym.date}"/></td>
                 <td><c:out value="${paym.sum}"/></td>
                 <td><c:out value="${paym.processed}"/></td>
+                <td><c:out value="${paym.customer.number}"/></td>
+                <%--<td></td>--%>
                 <td>
                     <nobr>
                     <a href="<c:url value='/admin/payment/${paym.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;

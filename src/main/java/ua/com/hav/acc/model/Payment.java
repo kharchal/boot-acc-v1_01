@@ -3,10 +3,7 @@ package ua.com.hav.acc.model;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -26,4 +23,8 @@ public class Payment {
     private BigDecimal sum = BigDecimal.ZERO;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private Date processed;
+
+    @ManyToOne
+    @JoinColumn(name = "cust_id")
+    private Customer customer;
 }

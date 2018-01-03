@@ -1,7 +1,6 @@
 package ua.com.hav.acc.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.com.hav.acc.model.CustService;
 import ua.com.hav.acc.model.Customer;
@@ -45,5 +44,9 @@ public class CustomerService {
             List<CustService> list = custServiceRepository.findAll().stream().filter(s -> services.contains(s.getId())).collect(toList());
             customer.setServiceList(list);
         }
+    }
+
+    public List<Customer> findByNumber(String number) {
+        return customerRepository.findByNumberContains(number);
     }
 }

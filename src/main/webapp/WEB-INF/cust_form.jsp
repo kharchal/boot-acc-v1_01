@@ -9,11 +9,7 @@
     <script src="/acc/static/js/md5.min.js"></script>
     <c:set var="pass_error"><s:message code="password.form.error"/></c:set>
     <script>
-        function preSubmit() {
-            var x = $("#fmt_number").val();
-            x = x.substr(1, 3) + x.substr(6, 3) + x.substr(10, 2) + x.substr(13, 2);
-            $("#number").val(x);
-        }
+
     </script>
 </head>
 <body>
@@ -37,14 +33,12 @@
         </tr>
         <tr>
             <td>
-                <label for="fmt_number">
+                <label for="number">
                     <s:message code="number"/>
                 </label>
             </td>
             <td>
-                <input id="fmt_number" value="${customer.formattedNumber}" class="form-control"
-                       pattern="^\([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$" required/>
-                <input type="hidden" name="number" id="number"/>
+                <f:input path="number" cssClass="form-control"/>
             </td>
             <td>
                 <f:errors path="number" cssClass="form-error"/>
@@ -106,8 +100,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <input class="btn btn-info" type="submit" value="<s:message code="form.save"/>" onclick="preSubmit();"/>
-                <input type="hidden" name="user.id" value="${customer.user.id}"/>
+                <input class="btn btn-info" type="submit" value="<s:message code="form.save"/>"/>
             </td>
             <td></td>
         </tr>
