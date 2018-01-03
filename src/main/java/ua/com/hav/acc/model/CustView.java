@@ -9,4 +9,5 @@ public class CustView {
 
     private Long id;
     private String number;
+    private String formattedNumber;
 }

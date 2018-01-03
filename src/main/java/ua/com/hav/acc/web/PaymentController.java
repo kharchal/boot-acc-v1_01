@@ -2,6 +2,7 @@ package ua.com.hav.acc.web;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +32,15 @@ public class PaymentController {
     @Autowired
     private CustomerService customerService;
 
+    private String sortByField = "id";
+    private Sort.Direction sortDir = Sort.Direction.ASC;
+
     @RequestMapping("")
     public String list(Model model) {
-        model.addAttribute("list", paymentService.findAll());
+        Sort sort = new Sort(sortDir, sortByField);
+        model.addAttribute("list", paymentService.findAll(sort));
+        model.addAttribute("sort_col", sortByField);
+        model.addAttribute("sort_order", sortDir.isAscending());
         return "paym_list";
     }
 
@@ -82,12 +89,7 @@ public class PaymentController {
     public String massProcess(@RequestParam(value = "ids[]", required = false) Long[] ids) {
         System.out.println("ids to process= " + Arrays.toString(ids));
         if (ids != null) {
-            Date d = new Date();
-            for (int i = 0; i < ids.length; i++) {
-                Payment payment = paymentService.findOne(ids[i]);
-                payment.setProcessed(d);
-                paymentService.save(payment);
-            }
+            paymentService.processPayments(ids);
         }
         return "ok";
     }
@@ -96,11 +98,30 @@ public class PaymentController {
     @ResponseBody
     public String find(@RequestParam("number") String number) {
         List<Customer> customers = customerService.findByNumber(number);
-        List<CustView> cst = new ArrayList<>();
-        for (Customer c : customers) {
-            cst.add(CustView.builder().id(c.getId()).number(c.getFormattedNumber()).build());
-        }
+        CustView[] cst = customers.stream()
+                .map(c -> CustView.builder().id(c.getId()).formattedNumber(c.getFormattedNumber()).number(c.getNumber()).build())
+                .toArray(CustView[]::new);
+//        List<CustView> cst = new ArrayList<>();
+//        for (Customer c : customers) {
+//            cst.add(CustView.builder().id(c.getId()).number(c.getNumber()).formattedNumber(c.getFormattedNumber()).build());
+//        }
         String json = new Gson().toJson(cst);
         return json;
+    }
+
+    @RequestMapping(value = "/ajax/unprocess", method = RequestMethod.POST)
+    @ResponseBody
+    public String unprocess(@RequestParam Long id) {
+        paymentService.unprocessPayment(id);
+        return "ok";
+    }
+
+
+    @RequestMapping(value = "/sort", method = RequestMethod.POST)
+    @ResponseBody
+    public String sort(@RequestParam("sort") String sortField, @RequestParam("order") boolean order) {
+        sortDir = order ? Sort.Direction.ASC : Sort.Direction.DESC;
+        sortByField = sortField;
+        return "ok";
     }
 }

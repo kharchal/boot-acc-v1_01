@@ -6,33 +6,41 @@
     <title>Payments list</title>
     <jsp:include page="util/imports.jsp"/>
     <script>
-        <%--var order = ${sort_order};--%>
-        <%--var sort = "${sort_col}";--%>
-        <%--var begining = "glyphicon glyphicon-";--%>
-        <%--var symbol = "arrow";--%>
-        <%--var up = "-up";--%>
-        <%--var down = "-down";--%>
-        <%--function reloadPageSorted() {--%>
-            <%--order = !order;--%>
-            <%--$.post("sort", {order: order, sort: sort}, function () {--%>
-                <%--location.reload(true);--%>
-            <%--});--%>
-        <%--}--%>
+        var order = ${sort_order};
+        var sort = "${sort_col}";
+        var begining = "glyphicon glyphicon-";
+        var symbol = "arrow";
+        var up = "-up";
+        var down = "-down";
+        function reloadPageSorted() {
+            order = !order;
+            $.post("sort", {order: order, sort: sort}, function () {
+                location.reload(true);
+            });
+        }
         $(document).ready(function () {
-//            var txt = $("#sort_" + sort).text();
-//            $("#sort_" + sort).html(txt + ":&nbsp;<span style='font-size: smaller; color: cornflowerblue;' class='" + begining + symbol + (order ? up : down) +"'></span>");
-//            $("#sort_id").click(function () {
-//                sort = "id";
-//                reloadPageSorted()
-//            });
-//            $("#sort_name").click(function () {
-//                sort = "date";
-//                reloadPageSorted()
-//            });
-//            $("#sort_cost").click(function () {
-//                sort = "sum";
-//                reloadPageSorted()
-//            });
+            var txt = $("#sort_" + sort).text();
+            $("#sort_" + sort).html(txt + ":&nbsp;<span style='font-size: smaller; color: cornflowerblue;' class='" + begining + symbol + (order ? up : down) +"'></span>");
+            $("#sort_id").click(function () {
+                sort = "id";
+                reloadPageSorted()
+            });
+            $("#sort_date").click(function () {
+                sort = "date";
+                reloadPageSorted()
+            });
+            $("#sort_sum").click(function () {
+                sort = "sum";
+                reloadPageSorted()
+            });
+            $("#sort_processed").click(function () {
+                sort = "processed";
+                reloadPageSorted()
+            });
+            $("#sort_cust").click(function () {
+                sort = "customer";
+                reloadPageSorted()
+            });
             $("#select_all").click(function () {
                 $(".chk:not(:checked)").each(function () {
                     $(this).prop("checked", true);
@@ -91,7 +99,7 @@
     <h2><s:message code="payment.list"/></h2>
     <table class="table table-hover">
         <tr>
-            <th>
+            <th width="7%">
                 <span class="dropdown">
                     <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-check"></span>&nbsp;
@@ -109,12 +117,12 @@
                     </ul>
                 </span>
             </th>
-            <th id="sort_id" onclick="sort('id');"><s:message code="id"/></th>
-            <th id="sort_date"><s:message code="date"/></th>
-            <th id="sort_sum"><s:message code="sum"/></th>
-            <th id="sort_processed"><s:message code="processed"/></th>
-            <th id="sort_cust"><s:message code="customer"/></th>
-            <th></th>
+            <th width="7%" id="sort_id" onclick="sort('id');"><s:message code="id"/></th>
+            <th width="23%" id="sort_date"><s:message code="date"/></th>
+            <th width="9%" id="sort_sum"><s:message code="sum"/></th>
+            <th width="23%" id="sort_processed"><s:message code="processed"/></th>
+            <th width="16%" id="sort_cust"><s:message code="customer"/></th>
+            <th width="15%"></th>
         </tr>
         <c:forEach var="paym" items="${list}">
             <tr>
@@ -123,13 +131,13 @@
                 <td><c:out value="${paym.date}"/></td>
                 <td><c:out value="${paym.sum}"/></td>
                 <td><c:out value="${paym.processed}"/></td>
-                <td><c:out value="${paym.customer.number}"/></td>
+                <td><c:out value="${paym.customer.formattedNumber}"/></td>
                 <%--<td></td>--%>
                 <td>
                     <nobr>
                     <a href="<c:url value='/admin/payment/${paym.id}'/>" class="btn btn-info btn-sm"><s:message code="edit"/></a>&nbsp;
                     <span class="dropdown">
-                        <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
+                        <button ${not empty paym.processed ? "disabled" : ""} class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><s:message code="delete"/>
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a href="#" class="btn btn-default btn-sm"><s:message code="cancel"/></a></li>
