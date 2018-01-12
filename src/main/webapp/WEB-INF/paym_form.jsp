@@ -25,6 +25,7 @@
     </style>
     <script>
         var x = [1, 2, 3, 6, 7, 8, 10, 11, 13, 14, 15];
+        var y = [1, 2, 3, 6, 7, 8, 10, 11, 13, 14, 15];
 
         function foo(id, numb) {
             $(".cust_id").val(id);
