@@ -19,15 +19,15 @@
     <div class="col-xs-8">
     <a href="<c:url value="/logout"/>"><s:message code="logout"/></a>
      |
-    <c:set value="${sessionScope.logged_user}" var="user"/>
-    <c:if test="${not empty user}">
-        login: <b>${user.login}</b>; name: <b>${user.name}</b>; roles: <b>[
-        <c:forEach var="r" items="${user.roles}" varStatus="status">
-            <c:if test="${!status.first}">
-                ,&nbsp;
-            </c:if>
-            ${r.value}
-        </c:forEach></b>]
-    </c:if>
+    <%--<c:set value="${sessionScope.logged_user}" var="user"/>--%>
+    <%--<c:if test="${not empty user}">--%>
+        <%--login: <b>${user.login}</b>; name: <b>${user.name}</b>; roles: <b>[--%>
+        <%--<c:forEach var="r" items="${user.roles}" varStatus="status">--%>
+            <%--<c:if test="${!status.first}">--%>
+                <%--,&nbsp;--%>
+            <%--</c:if>--%>
+            <%--${r.value}--%>
+        <%--</c:forEach></b>]--%>
+    <%--</c:if>--%>
     </div>
 </div>

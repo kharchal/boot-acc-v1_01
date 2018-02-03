@@ -37,4 +37,10 @@ public class BootAccV101Application {
 		return "error";
 	}
 
+//	@RequestMapping("error")
+//	public String error() {
+//		return "error";
+//	}
+
+
 }
